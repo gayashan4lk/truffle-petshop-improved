@@ -7,7 +7,7 @@ import {
 	Button,
 } from 'reactstrap';
 
-const PetCard = ({ pet, adopters, handleAdopt, isAdopted }) => {
+const PetCard = ({ pet, handleAdopt, isAdopted }) => {
 	let button = isAdopted ? (
 		<Button color='secondary' disabled={true}>
 			Already adopted.
