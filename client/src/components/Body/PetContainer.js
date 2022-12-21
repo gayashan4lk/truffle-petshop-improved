@@ -32,7 +32,6 @@ const PetContainer = ({ pets }) => {
 		<li key={pet.id} style={{ float: 'left', margin: '10px' }}>
 			<PetCard
 				pet={pet}
-				adopters={adopters}
 				handleAdopt={adopt}
 				isAdopted={isAlreadyAdopted(adopters[pet.id])}
 			/>
