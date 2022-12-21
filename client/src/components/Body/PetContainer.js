@@ -21,9 +21,21 @@ const PetContainer = ({ pets }) => {
 		await contract.methods.adopt(petId).send({ from: accounts[0] });
 	};
 
+	const isAlreadyAdopted = (petAdopterAdress) => {
+		if (petAdopterAdress === '0x0000000000000000000000000000000000000000') {
+			return false;
+		}
+		return true;
+	};
+
 	const listItems = pets.map((pet) => (
 		<li key={pet.id} style={{ float: 'left', margin: '10px' }}>
-			<PetCard pet={pet} adopters={adopters} handleAdopt={adopt} />
+			<PetCard
+				pet={pet}
+				adopters={adopters}
+				handleAdopt={adopt}
+				isAdopted={isAlreadyAdopted(adopters[pet.id])}
+			/>
 		</li>
 	));
 
