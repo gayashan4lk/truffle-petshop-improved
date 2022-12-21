@@ -6,7 +6,6 @@ import PetCard from './PetCard';
 const PetContainer = ({ pets }) => {
 	const [adopters, setAdopters] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-
 	const {
 		state: { contract, accounts },
 	} = useEth();
@@ -18,18 +17,13 @@ const PetContainer = ({ pets }) => {
 		return adoptersArray;
 	};
 
-	const handleAdopt = (petId) => {
-		console.log('handle adopt was called. ' + petId);
-		adopt(petId);
-	};
-
 	const adopt = async (petId) => {
 		await contract.methods.adopt(petId).send({ from: accounts[0] });
 	};
 
 	const listItems = pets.map((pet) => (
 		<li key={pet.id} style={{ float: 'left', margin: '10px' }}>
-			<PetCard pet={pet} adopters={adopters} handleAdopt={handleAdopt} />
+			<PetCard pet={pet} adopters={adopters} handleAdopt={adopt} />
 		</li>
 	));
 
