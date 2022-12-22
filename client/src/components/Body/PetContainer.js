@@ -6,6 +6,7 @@ import PetCard from './PetCard';
 const PetContainer = ({ pets }) => {
 	const [adopters, setAdopters] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [update, setUpdate] = useState(null);
 	const {
 		state: { contract, accounts },
 	} = useEth();
@@ -17,8 +18,19 @@ const PetContainer = ({ pets }) => {
 		return adoptersArray;
 	};
 
+	const petAdoptedEvent = () => {
+		let eventResult = contract.events.petAdopted({}, (error, event) => {
+			if (error) {
+				console.error(error);
+				return;
+			}
+		});
+		setUpdate(eventResult);
+	};
+
 	const adopt = async (petId) => {
 		await contract.methods.adopt(petId).send({ from: accounts[0] });
+		petAdoptedEvent();
 	};
 
 	const isAlreadyAdopted = (petAdopterAdress) => {
@@ -47,7 +59,7 @@ const PetContainer = ({ pets }) => {
 			})();
 			setIsLoading(false);
 		}
-	}, [accounts]);
+	}, [accounts, update]);
 
 	if (isLoading) {
 		return (
